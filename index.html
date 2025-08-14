@@ -4,153 +4,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda de Citas | Bienestar Psicológico</title>
+
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary-color: #4A235A;      /* Morado oscuro y profundo */
-            --secondary-color: #8E44AD;     /* Morado vibrante (amatista) */
-            --accent-color: #D7BDE2;        /* Lavanda claro */
-            --background-color: #f9f7fc;    /* Fondo muy claro con un toque violáceo */
-            --text-color-dark: #2C3E50;     /* Texto principal oscuro (azul pizarra) */
-            --text-color-light: #f1f1f1;    /* Texto claro sobre fondos oscuros */
+            --secondary-color: #6C3483;    /* Morado intermedio */
+            --accent-color: #D5DBDB;       /* Un gris muy claro para bordes sutiles */
+            --background-color: #F8F9F9;   /* Fondo general muy claro */
+            --text-color-dark: #2C3E50;     /* Texto principal (azul pizarra) */
+            --text-color-light: #FFFFFF;    /* Texto claro (blanco) */
             --white: #FFFFFF;
         }
 
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body, html {
-            height: 100%;
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--background-color);
             color: var(--text-color-dark);
+            line-height: 1.7;
         }
 
         .container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            width: 100%;
         }
 
+        /* --- Header Mejorado --- */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: var(--white);
-            padding: 1.5rem 1rem;
+            color: var(--text-color-light);
+            padding: 3rem 1.5rem;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.8s ease-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: slideDown 0.9s ease-out;
         }
 
         header h1 {
-            font-family: 'Lora', serif;
-            font-size: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
         }
 
         header p {
-            font-size: 1.1rem;
-            color: var(--text-color-light);
+            font-size: 1.15rem;
             font-weight: 300;
+            opacity: 0.9;
         }
 
+        /* --- Main Content --- */
         .calendar-wrapper {
             flex: 1;
             padding: 1rem;
-            margin: 1.5rem auto;
-            width: 98%;
-            max-width: 1600px;
+            margin: 2rem auto;
+            width: 95%;
+            max-width: 1500px;
             background: var(--white);
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(74, 35, 90, 0.1); /* Sombra basada en el morado primario */
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 1s ease-out 0.2s both;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            animation: fadeInUp 1s ease-out 0.2s backwards;
         }
-
-        .calendar-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-        }
-
+        
         iframe {
             width: 100%;
-            height: calc(100vh - 200px); 
+            height: calc(100vh - 280px); /* Ajustado para el nuevo header */
+            min-height: 550px;
             border: none;
             border-radius: 8px;
         }
 
+        /* --- Footer --- */
         footer {
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            color: var(--text-color-light);
+            background-color: var(--white);
+            color: var(--secondary-color);
             text-align: center;
-            padding: 1rem;
+            padding: 1.5rem;
             margin-top: auto;
+            border-top: 1px solid #EAEDED;
         }
 
         footer p {
             font-size: 0.9rem;
-            opacity: 0.9;
         }
 
-        /* --- Estilos para el Sweet Alert personalizado --- */
-        .swal2-popup.custom-swal-popup {
-            border-radius: 15px !important;
-            border-top: 5px solid var(--primary-color);
+        /* --- Estilos para el Sweet Alert (mismos estilos refinados) --- */
+        .swal2-popup.custom-swal {
+            border-radius: 20px !important;
+            border: none;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1) !important;
         }
 
         .swal2-title.custom-swal-title {
-            font-family: 'Lora', serif;
+            font-family: 'Playfair Display', serif;
             color: var(--primary-color);
+            font-size: 1.8rem;
+            padding-top: 20px;
         }
-
-        .custom-swal-html {
+        
+        .swal2-html-container.custom-swal-html {
             text-align: left;
-            padding: 10px;
-            font-size: 1em;
-            color: #4a4a4a;
+            padding: 0 25px;
+            margin: 20px 0 !important;
+            font-size: 1rem;
+            color: #555;
         }
 
         .custom-swal-html .info-list {
             list-style: none;
             padding: 0;
-            margin: 20px 0 0 0;
+            margin-top: 25px;
         }
 
         .custom-swal-html .info-item {
             display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            padding: 15px;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 15px;
             margin-bottom: 15px;
-            border-radius: 8px;
-            background-color: rgba(142, 68, 173, 0.05); /* Fondo basado en morado secundario */
-            border: 1px solid rgba(142, 68, 173, 0.2);
+            border-radius: 12px;
+            background-color: var(--background-color);
+            border: 1px solid #EAECEE;
         }
         
         .custom-swal-html .info-item svg {
             flex-shrink: 0;
-            width: 28px;
-            height: 28px;
-            margin-top: 2px;
+            width: 32px;
+            height: 32px;
             color: var(--secondary-color);
         }
 
         .custom-swal-html .info-item p {
             margin: 0;
-            line-height: 1.6;
+            line-height: 1.5;
         }
         
         .custom-swal-html strong {
@@ -158,26 +163,60 @@
             color: var(--primary-color);
         }
 
-        .swal2-confirm.custom-confirm-button {
-            background-color: var(--secondary-color) !important;
-            border-radius: 8px !important;
-            padding: 12px 25px !important;
-            font-size: 1em !important;
-            box-shadow: 0 4px 10px rgba(142, 68, 173, 0.3) !important;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header h1 { font-size: 1.5rem; }
-            header p { font-size: 0.9rem; }
-            .calendar-wrapper { padding: 0.5rem; margin: 1rem auto; }
-            iframe { height: calc(100vh - 180px); }
+        .swal2-confirm.custom-swal-button {
+            background-color: var(--primary-color) !important;
+            border-radius: 12px !important;
+            padding: 14px 30px !important;
+            font-size: 1rem !important;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(74, 35, 90, 0.3) !important;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        /* Animaciones */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-15px); }
-            to { opacity: 1; transform: translateY(0); }
+        .swal2-confirm.custom-swal-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 35, 90, 0.4) !important;
+        }
+
+        .swal2-icon.swal2-info {
+            color: var(--secondary-color) !important;
+            border-color: var(--secondary-color) !important;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            header { padding: 2.5rem 1rem; }
+            header h1 { font-size: 2.2rem; }
+            header p { font-size: 1.1rem; }
+            .calendar-wrapper { padding: 0.5rem; margin: 1.5rem auto; }
+            iframe { height: calc(100vh - 240px); }
+        }
+        
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.9rem; }
+            header p { font-size: 1rem; }
+        }
+
+        /* --- Keyframe Animations --- */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -189,6 +228,7 @@
         </header>
 
         <main class="calendar-wrapper">
+            <!-- El iframe de Google Calendar se mantiene igual -->
             <iframe src="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3ahnfcdNYuMj3IykB2F9-8mD6vjjhU8XtY6qJ1IYUn8bfdnESPq3M_wqEgu-14e4E22qnzxT7-"></iframe>
         </main>
 
@@ -200,33 +240,32 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
-                title: '¡Información Importante!',
+                title: 'Información Importante',
+                icon: 'info',
                 html: `
                     <div class="custom-swal-html">
                         <p>Antes de agendar, por favor ten en cuenta lo siguiente:</p>
                         <ul class="info-list">
                             <li class="info-item">
-                                <!-- Ícono de reloj -->
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586V7z"></path></svg>
-                                <p>El <strong>horario de atención</strong> disponible en el calendario es de 8:00 AM a 1:00 PM y de 5:00 PM a 9:00 PM.</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <p>El <strong>horario de atención</strong> disponible es de <strong>8:00 AM a 12:00 PM</strong> y de <strong>5:00 PM a 8:00 PM</strong>.</p>
                             </li>
                             <li class="info-item">
-                                <!-- Ícono de email -->
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20,4H4C2.897,4,2,4.897,2,6v12c0,1.103,0.897,2,2,2h16c1.103,0,2-0.897,2-2V6C22,4.897,21.103,4,20,4z M19.436,6 12,11.693 4.564,6H19.436z M4,18V7.307l8,5.693l8-5.693V18H4z"></path></svg>
-                                <p>Recibirás la <strong>confirmación en tu correo</strong>. Es indispensable que muestres este correo a la psicóloga al momento de tu consulta.</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <p>Recibirás un <strong>correo de confirmación</strong>. Es indispensable que lo muestres a la psicóloga al momento de tu consulta.</p>
                             </li>
                         </ul>
                     </div>
                 `,
-                icon: 'info',
                 confirmButtonText: 'Entendido, ver agenda',
-                width: 'clamp(350px, 90%, 700px)',
+                width: 'clamp(380px, 90%, 650px)',
                 showCloseButton: true,
                 allowOutsideClick: false,
                 customClass: {
-                    popup: 'custom-swal-popup',
+                    popup: 'custom-swal',
                     title: 'custom-swal-title',
-                    confirmButton: 'custom-confirm-button',
+                    htmlContainer: 'custom-swal-html',
+                    confirmButton: 'custom-swal-button',
                 }
             });
         });
