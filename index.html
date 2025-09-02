@@ -48,7 +48,7 @@
             width: 100%;
         }
 
-        /* --- Header --- */
+        /* --- Header Mejorado --- */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: var(--text-color-light);
@@ -87,7 +87,7 @@
         
         iframe {
             width: 100%;
-            height: calc(100vh - 280px);
+            height: calc(100vh - 280px); /* Ajustado para el nuevo header */
             min-height: 550px;
             border: none;
             border-radius: 8px;
@@ -107,7 +107,7 @@
             font-size: 0.9rem;
         }
 
-        /* --- Estilos para el Sweet Alert --- */
+        /* --- Estilos para el Sweet Alert (mismos estilos refinados) --- */
         .swal2-popup.custom-swal {
             border-radius: 20px !important;
             border: none;
@@ -121,55 +121,68 @@
             padding-top: 20px;
         }
         
-        .swal2-icon.swal2-info {
-            color: var(--secondary-color) !important;
-            border-color: var(--secondary-color) !important;
-        }
-
-        /* --- NUEVO DISEÑO PARA EL COMUNICADO --- */
-        .swal2-html-container.announcement-html {
+        .swal2-html-container.custom-swal-html {
             text-align: left;
-            padding: 5px 25px;
+            padding: 0 25px;
             margin: 20px 0 !important;
             font-size: 1rem;
             color: #555;
         }
 
-        .announcement-html .date-highlight {
+        .custom-swal-html .info-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 25px;
+        }
+
+        .custom-swal-html .info-item {
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin: 25px 0;
-            padding: 20px;
-            background-color: #f1eaf5; /* Un tono lila muy claro */
-            border-left: 5px solid var(--primary-color);
-            border-radius: 8px;
+            gap: 18px;
+            padding: 18px 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            background-color: var(--background-color);
+            border: 1px solid #EAECEE;
         }
-
-        .announcement-html .date-highlight svg {
+        
+        .custom-swal-html .info-item svg {
             flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            color: var(--primary-color);
-        }
-        
-        .announcement-html .date-highlight-text {
-            line-height: 1.4;
+            width: 32px;
+            height: 32px;
+            color: var(--secondary-color);
         }
 
-        .announcement-html .date-highlight-text span {
-            font-size: 0.95rem;
-            color: var(--text-color-dark);
-        }
-
-        .announcement-html .date-highlight-text strong {
-            display: block;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            color: var(--primary-color);
-            font-weight: 700;
+        .custom-swal-html .info-item p {
+            margin: 0;
+            line-height: 1.5;
         }
         
+        .custom-swal-html strong {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .swal2-confirm.custom-swal-button {
+            background-color: var(--primary-color) !important;
+            border-radius: 12px !important;
+            padding: 14px 30px !important;
+            font-size: 1rem !important;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(74, 35, 90, 0.3) !important;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .swal2-confirm.custom-swal-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 35, 90, 0.4) !important;
+        }
+
+        .swal2-icon.swal2-info {
+            color: var(--secondary-color) !important;
+            border-color: var(--secondary-color) !important;
+        }
+
         /* --- Responsive Design --- */
         @media (max-width: 768px) {
             header { padding: 2.5rem 1rem; }
@@ -182,12 +195,29 @@
         @media (max-width: 480px) {
             header h1 { font-size: 1.9rem; }
             header p { font-size: 1rem; }
-            .announcement-html .date-highlight { flex-direction: column; text-align: center; gap: 10px; }
         }
 
         /* --- Keyframe Animations --- */
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -198,6 +228,7 @@
         </header>
 
         <main class="calendar-wrapper">
+            <!-- El iframe de Google Calendar se mantiene igual -->
             <iframe src="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3ahnfcdNYuMj3IykB2F9-8mD6vjjhU8XtY6qJ1IYUn8bfdnESPq3M_wqEgu-14e4E22qnzxT7-"></iframe>
         </main>
 
@@ -209,34 +240,32 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
-                title: 'Aviso Importante',
+                title: 'Información Importante',
                 icon: 'info',
                 html: `
-                    <div class="announcement-html">
-                        <p>La <strong>Oficina de Servicios al Estudiante (OSE)</strong> informa que el sistema de agendamiento de citas para psicología se encuentra temporalmente en pausa.</p>
-                        
-                        <div class="date-highlight">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            <div class="date-highlight-text">
-                                <span>El servicio se reanudará el:</span>
-                                <strong>Lunes, 8 de Septiembre</strong>
-                            </div>
-                        </div>
-
-                        <p>Agradecemos de antemano su comprensión.</p>
+                    <div class="custom-swal-html">
+                        <p>Antes de agendar, por favor ten en cuenta lo siguiente:</p>
+                        <ul class="info-list">
+                            <li class="info-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <p>El <strong>horario de atención</strong> disponible es de <strong>8:00 AM a 12:00 PM</strong> y de <strong>5:00 PM a 8:00 PM</strong>.</p>
+                            </li>
+                            <li class="info-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <p>Recibirás un <strong>correo de confirmación</strong>. Es indispensable que lo muestres a la psicóloga al momento de tu consulta.</p>
+                            </li>
+                        </ul>
                     </div>
                 `,
-                // --- Opciones clave para bloquear la interacción ---
-                allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
-                allowEscapeKey: false,    // Evita que se cierre con la tecla Esc
-                showConfirmButton: false, // Oculta cualquier botón de acción
-                showCloseButton: false,   // Oculta el botón de cerrar en la esquina
-                
+                confirmButtonText: 'Entendido, ver agenda',
                 width: 'clamp(380px, 90%, 650px)',
+                showCloseButton: true,
+                allowOutsideClick: false,
                 customClass: {
                     popup: 'custom-swal',
                     title: 'custom-swal-title',
-                    htmlContainer: 'announcement-html',
+                    htmlContainer: 'custom-swal-html',
+                    confirmButton: 'custom-swal-button',
                 }
             });
         });
